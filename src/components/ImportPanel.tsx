@@ -84,14 +84,15 @@ export function ImportPanel({ onLoad }: Props) {
           <div className="flex flex-col items-center gap-2 text-ink-muted">
             <IconFile width={32} height={32} />
             <div className="text-sm">
-              <span className="text-info underline">Click to select</span> or drop a <code>.json</code> / <code>.txt</code> log file
+              <span className="text-info underline">Click to select</span> or drop a{' '}
+              <code>.json</code>, <code>.txt</code> or <code>.html</code> dashboard page
             </div>
             <div className="text-xs text-ink-dim">Anything up to a few MB works fine</div>
           </div>
           <input
             ref={fileRef}
             type="file"
-            accept=".json,.txt,application/json,text/plain"
+            accept=".json,.txt,.html,.htm,application/json,text/plain,text/html"
             className="hidden"
             onChange={(e) => handleFile(e.target.files?.[0])}
           />
@@ -103,10 +104,14 @@ export function ImportPanel({ onLoad }: Props) {
           <textarea
             value={pasted}
             onChange={(e) => setPasted(e.target.value)}
-            placeholder='{ "status": "success", "data": [ … ] }'
+            placeholder='{ "status": "success", "data": [ … ] }    — or the full HTML of the dashboard page'
             spellCheck={false}
             className="field font-mono text-xs min-h-[260px] resize-y"
           />
+          <p className="mt-2 text-[11px] text-ink-dim">
+            Paste raw JSON, or the full HTML of the registry dashboard — the embedded{' '}
+            <code>window.__EXECUTION_PAYLOAD__</code> is extracted automatically.
+          </p>
           <div className="mt-2 flex justify-end">
             <button className="btn-primary" onClick={handlePaste}>Parse</button>
           </div>
